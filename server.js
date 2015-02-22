@@ -43,7 +43,7 @@
 			  else{
 			  	var payload = {
 			  		data:{
-			  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
+			  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + fileName
 			  		}
 			  	};
 			  	androidPushNotification(payload);
