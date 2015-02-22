@@ -17,11 +17,13 @@
 			ip       : '127.0.0.1',   // stub this out now
 			port     : PORT,
 			endpoint : { takePhoto: '/takePhoto' },
-			log      : log.bind("Edison: ")
+			log      : log.bind(null, "Edison:")
 		};
 
 
 	console.log('\n');
+
+	app.use('/uploads', express.static(__dirname + '/uploads'));
 
 	app.get('/', function (req, res) {
 		res.send('doorman in node');
@@ -52,6 +54,7 @@
 		// request edison to take a picture
 		getPhoto(function __success(data) {
 			console.log("got photo");
+
 		});
 
 		// send pkg id and picture to user
@@ -66,9 +69,13 @@
 
 		onPackageId(req, res, pkgId);
 
-		res.send(msg);
+		var
+			//html = [msg, DELIVERY_IMG].join("<br><br>");
+			html = msg;
+
+		res.send(html);
 	});
-	
+
 	app.post('/pkg/:id', function (req, res) {
 		res.json({
 			call_url:"http://example.com",
@@ -82,20 +89,26 @@
 		// send signal to edison to unlock
 	});
 
+
 	app.listen(PORT);
 
 	/*
 	* EDISON DEVICE STUB
 	*/
+	var
+		UPLOAD_DIR = __dirname + '/uploads',
+		DELIVERY_PERSON_PHOTO_FILENAME = UPLOAD_DIR + '/upsguy.jpg',
+		DELIVERY_IMG = '<img src="/uploads/upsguy.jpg"/>';
 
-	function log() {
-		console.log.apply(null, arguments);
-	}
+	function log() { console.log.apply(null, arguments); }
 
 	app.get('/takePhoto', function (req, res) {
-		var msg = 'Edison: took a photo of the delivery person';
-		logEdison(msg);
-		res.send(msg);
+		var
+			//photo = fs.readFile('/upload/
+			msg = 'took a photo of the delivery person';
+
+		EDISON.log(msg);
+		res.sendFile(DELIVERY_PERSON_PHOTO_FILENAME);
 	});
 
 }());
