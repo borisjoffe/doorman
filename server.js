@@ -140,8 +140,6 @@
 	function pushUnlockAlertToDriver() {
 	}
 
-	app.listen(PORT);
-
 	/*
 	* EDISON DEVICE STUB
 	*/
@@ -161,4 +159,14 @@
 		res.sendFile(DELIVERY_PERSON_PHOTO_FILENAME);
 	});
 
+
+	/*
+	* Webhooks and Callback URLs
+	*/
+
+	app.get('/att-oauth', function (req, res) {
+		res.send("success");
+	});
+
+	app.listen(PORT);
 }());
