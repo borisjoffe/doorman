@@ -42,12 +42,13 @@
 	  			console.log(err);
 	  		}
 			  else{
-			  	var payload{
-			  		data:{
-			  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
-			  		}
-			  	}
-			  	androidPushNotification(payload);
+			  	//var payload{
+			  	//	data:{
+			  	//		imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
+			  	//	}
+			  	//}
+			  	//androidPushNotification(payload);
+			  	console.log("https://doorman.azurewebsite.net/uploads/" + fileName);
 			  }
 			});
 
