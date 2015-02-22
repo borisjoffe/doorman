@@ -18,6 +18,7 @@
 
 		// config
 		PORT = process.env.PORT || 9000,
+		NO_NOTIFICATIONS = false,
 
 		EDISON = {
 			ip       : '127.0.0.1',   // stub this out now
@@ -118,6 +119,11 @@
 			data: { msg: 'Hello!' }
 		};
 
+		if (NO_NOTIFICATIONS) {
+			console.log("Dry run of push notification - not sending");
+			return;
+		}
+
 		notificationHubService.gcm.send(null, payload, function(error){
 			if(!error){ console.log("notification sent"); }
 			else {
@@ -126,11 +132,11 @@
 		});
 	}
 
-	// called after /pkg
+	// called after /pkg - send webrtc page
 	function pushPackageAlertToRecipient() {
 	}
 
-	// called after /unlock
+	// called after /unlock - send webrtc page
 	function pushUnlockAlertToDriver() {
 	}
 
