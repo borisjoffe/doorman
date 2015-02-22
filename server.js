@@ -31,6 +31,7 @@
 	console.log('\n');
 
 	app.use('/uploads', express.static(__dirname + '/uploads'));
+	app.use('/public', express.static(__dirname + '/public'));
 
 	app.get('/', function (req, res) {
 		res.send('doorman in node');
@@ -171,4 +172,5 @@
 	});
 
 	app.listen(PORT);
+
 }());
