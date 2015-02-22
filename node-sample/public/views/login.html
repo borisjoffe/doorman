@@ -1,0 +1,33 @@
+<div class="jumbotron text-center">
+  <p>
+    Login
+  </p>
+
+  <a class="btn btn-primary change_view" onclick="mobileNumberLogin();" id="login-mobile-number">
+    <span> AT&amp;T Mobile Number User </span>
+  </a>
+  <br/>&nbsp;&nbsp;<br/>
+  <a class="btn btn-default change_view" onclick="virtualNumberLogin(event);" id="login-virtual-number">
+    <span> Virtual Number User </span>
+    <form id="login-virtual-number-form" action="" onsubmit="loginVirtualNumber(event, this)" style="display:none">
+      <br/>&nbsp;&nbsp;<br/>
+      <select required class="form-control" name="username" value=""></select>
+      <br/>&nbsp;&nbsp;<br/>
+      <button type="submit" class="btn btn-primary" id="submit-login-virtual-number-">
+        Login
+      </button>
+    </form>
+  </a>
+  <br/>&nbsp;&nbsp;<br/>
+  <a class="btn btn-default change_view" onclick="accountIdUserLogin(event);" id="login-account-id">
+    <span> Account ID User </span>
+    <form id="login-account-id-form" action="" onsubmit="loginAccountIdUser(event, this)" style="display:none">
+      <br/>&nbsp;&nbsp;<br/>
+      <input required type="text" class="form-control" name="username" placeholder="User Name" value="">
+      <br/>&nbsp;&nbsp;<br/>
+      <button type="submit" class="btn btn-primary" id="submit-login-account-id">
+        Login
+      </button>
+    </form>
+  </a>
+</div>

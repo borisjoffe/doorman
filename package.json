@@ -7,13 +7,13 @@
     "azure": "^0.10.4",
     "azure-cli": "^0.8.15",
     "express": "^4.11.2",
-    "lodash": "^3.3.0"
+    "lodash": "^3.3.0",
+    "socket.io": "^1.3.4"
   },
   "devDependencies": {
     "atob": "1.1.2",
     "socket.io": "^1.2.1"
-
-    },
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
