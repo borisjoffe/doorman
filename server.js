@@ -16,7 +16,7 @@
 	);
 
 		// config
-	var PORT = process.env.PORT || 9000,
+	var PORT = process.env.PORT || 5000,
 		NO_NOTIFICATIONS = false;
 
 	var EDISON = {
