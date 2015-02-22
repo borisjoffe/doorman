@@ -48,11 +48,13 @@
 	function onPackageId(req, res, pkgId) {
 		console.log('Package ID:', pkgId, 'received');
 
+		/*
 		// request edison to take a picture
 		getPhoto(function __success(data) {
 			console.log("got photo");
 
 		});
+		*/
 
 		// send pkg id and picture to user
 	}
@@ -185,7 +187,7 @@
 		  			console.log(err);
 		  		}
 				  else{
-				  	var payload{
+				  	var payload = {
 				  		data:{
 				  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
 				  		}
