@@ -70,6 +70,7 @@
 		// send pkg id and picture to user
 	}
 
+	// debug pkg delivery endpoint
 	app.get('/pkg/:id', function (req, res) {
 		var
 			pkgId = req.params.id,
@@ -84,8 +85,11 @@
 			html = msg;
 
 		res.send(html);
+
+		androidPushTest();
 	});
 
+	// production pkg delivery endpoint
 	app.post('/pkg/:id', function (req, res) {
 		res.json({
 			call_url:"http://example.com",
@@ -108,6 +112,19 @@
 	/*
 	* Push notifications
 	*/
+
+	function androidPushTest() {
+		var payload = {
+			data: { msg: 'Hello!' }
+		};
+
+		notificationHubService.gcm.send(null, payload, function(error){
+			if(!error){ console.log("notification sent"); }
+			else {
+				console.error("notification failed", error);
+			}
+		});
+	}
 
 	// called after /pkg
 	function pushPackageAlertToRecipient() {
