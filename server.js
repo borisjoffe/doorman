@@ -7,14 +7,17 @@
 
 		express = require('express'),
 		app = express(),
-		https = require('https'),
+
+		http = require('http') || require('https'),
 
 		// config
 		PORT = process.env.PORT || 9000,
 
 		EDISON = {
-			ip: '127.0.0.1' + ':' + PORT,   // stub this out now
-			takePhotoEndpoint: '/takePhoto'
+			ip       : '127.0.0.1',   // stub this out now
+			port     : PORT,
+			endpoint : { takePhoto: '/takePhoto' },
+			log      : log.bind("Edison: ")
 		};
 
 
@@ -30,12 +33,12 @@
 
 		var edisonPhotoReq = {
 			host   : EDISON.ip,
-			path   : EDISON.takePhotoEndpoint,
+			path   : EDISON.endpoint.takePhoto,
+			port   : EDISON.port,
 			method : 'GET'
 		};
-		console.log('getPhoto');
 
-		https.get(edisonPhotoReq, function (res) {
+		http.get(edisonPhotoReq, function (res) {
 			res.on('data', onSuccess);
 		}).on('error', function () {
 			console.log('err');
@@ -72,7 +75,7 @@
 			id: req.params.id
 		});
 
-		onPackageId();
+		onPackageId(req, res, pkgId);
 	});
 
 	app.get('/unlock/:door', function (req, res) {
@@ -85,12 +88,12 @@
 	* EDISON DEVICE STUB
 	*/
 
-	function logEdison() {
+	function log() {
 		console.log.apply(null, arguments);
 	}
 
-	app.get('takePhoto', function (req, res) {
-		var msg = 'Edison took a photo of the delivery person';
+	app.get('/takePhoto', function (req, res) {
+		var msg = 'Edison: took a photo of the delivery person';
 		logEdison(msg);
 		res.send(msg);
 	});
