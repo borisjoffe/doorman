@@ -22,6 +22,12 @@
 		// request edison to take a picture
 		// send pkg id and picture to user
 	});
+	
+	app.post('/pkg/:id', function (req, res) {
+		res.json({
+			call_url:"http://example.com"
+		});
+	});
 
 	app.get('/unlock/:door', function (req, res) {
 		// send signal to edison to unlock
