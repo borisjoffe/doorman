@@ -10,6 +10,12 @@
 
 		http = require('http') || require('https'),
 
+		azure = require('azure'),
+		notificationHubService = azure.createNotificationHubService(
+			'doormanhub',
+			'Endpoint=sb://doormanhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=qH4Zz0OXMjRltBXONus6eRZrV+auv6FU3Ogs48sCzAA='
+		),
+
 		// config
 		PORT = process.env.PORT || 9000,
 
@@ -28,6 +34,10 @@
 	app.get('/', function (req, res) {
 		res.send('doorman in node');
 	});
+
+	/**
+	* Delivery driver endpoints
+	*/
 
 	function getPhoto(onSuccess, onError) {
 		onSuccess = onSuccess || console.log;
@@ -85,10 +95,27 @@
 		onPackageId(req, res, pkgId);
 	});
 
+	/**
+	* Recipient endpoints
+	*/
+
 	app.get('/unlock/:door', function (req, res) {
 		// send signal to edison to unlock
+		// send WebRTC URL to recipient
 	});
 
+
+	/*
+	* Push notifications
+	*/
+
+	// called after /pkg
+	function pushPackageAlertToRecipient() {
+	}
+
+	// called after /unlock
+	function pushUnlockAlertToDriver() {
+	}
 
 	app.listen(PORT);
 
