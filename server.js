@@ -125,7 +125,7 @@
 		}
 
 		notificationHubService.gcm.send(null, payload, function(error){
-			if(!error){ console.log("notification sent"); }
+			if (!error) { console.log("notification sent"); }
 			else {
 				console.error("notification failed", error);
 			}
