@@ -73,9 +73,7 @@
 			//html = [msg, DELIVERY_IMG].join("<br><br>");
 			html = msg;
 		var payload = {
-			data: {
-				msg: "Hellow Push!!!"
-			}
+			message: "Hellow Push!!!"
 		};
 		androidPushNotification(payload);
 
