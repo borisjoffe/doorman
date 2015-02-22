@@ -1,31 +1,58 @@
 (function () {
 	'use strict';
 
-	var
-		// imports
-		_ = require('lodash'),
+	var _ = require('lodash'),
 
-		express = require('express'),
-		app = express(),
-
-		http = require('http') || require('https'),
-
-		azure = require('azure'),
-		notificationHubService = azure.createNotificationHubService(
-			'doormanhub',
-			'Endpoint=sb://doormanhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=qH4Zz0OXMjRltBXONus6eRZrV+auv6FU3Ogs48sCzAA='
-		),
+	express = require('express'),
+	app = express(),
+	var fs = require("fs")
+	var http = require('http') || require('https'),
+	var io = require('socket.io')(http);
+	var socketio;
+	var azure = require('azure'),
+	var pictureHandler = require("picture_handler")
+	var notificationHubService = azure.createNotificationHubService(
+		'doormanhub',
+		'Endpoint=sb://doormanhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=qH4Zz0OXMjRltBXONus6eRZrV+auv6FU3Ogs48sCzAA='
+	),
 
 		// config
-		PORT = process.env.PORT || 9000,
-		NO_NOTIFICATIONS = false,
+	PORT = process.env.PORT || 9000,
+	NO_NOTIFICATIONS = false,
 
-		EDISON = {
-			ip       : '127.0.0.1',   // stub this out now
-			port     : PORT,
-			endpoint : { takePhoto: '/takePhoto' },
-			log      : log.bind(null, "Edison:")
-		};
+	EDISON = {
+		ip       : '127.0.0.1',   // stub this out now
+		port     : PORT,
+		endpoint : { takePhoto: '/takePhoto' },
+		log      : log.bind(null, "Edison:")
+	};
+	
+	console.log("Oppening Socket...");
+	io.on('connection', function(socket){
+		socketio = socket
+	  socketio.on('disconnect', function(){
+	    console.log('edison disconnected');
+	  });
+	  socketio.on('package_picture', function(socket_data){
+	  	var base64Data = socket_data.image.base64String
+	  	var fileFormat = socket_data.image.contentType.split("/")[1]
+	  	var fileName = pictureHandler.guid() + "." + fileFormat
+	  	fs.writeFile(fileName, base64Data, 'base64', function(err) {
+	  		if(!err){
+	  			console.log(err);
+	  		}
+			  else{
+			  	var payload{
+			  		data:{
+			  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
+			  		}
+			  	}
+			  	androidPushNotification(payload);
+			  }
+			});
+
+	  });
+	});
 
 
 	console.log('\n');
@@ -37,28 +64,6 @@
 		res.send('doorman in node');
 	});
 
-	/**
-	* Delivery driver endpoints
-	*/
-
-	function getPhoto(onSuccess, onError) {
-		onSuccess = onSuccess || console.log;
-		onError = onError || console.error;
-
-		var edisonPhotoReq = {
-			host   : EDISON.ip,
-			path   : EDISON.endpoint.takePhoto,
-			port   : EDISON.port,
-			method : 'GET'
-		};
-
-		http.get(edisonPhotoReq, function (res) {
-			res.on('data', onSuccess);
-		}).on('error', function () {
-			console.log('err');
-			onError.apply(null, arguments);
-		});
-	}
 
 	function onPackageId(req, res, pkgId) {
 		console.log('Package ID:', pkgId, 'received');
@@ -87,8 +92,12 @@
 			html = msg;
 
 		res.send(html);
-
-		androidPushTest();
+		var payload = {
+			data{
+				msg: "Hellow Push!!!"
+			}
+		}
+		androidPushNotification(payload);
 	});
 
 	// production pkg delivery endpoint
@@ -110,15 +119,20 @@
 		// send WebRTC URL to recipient
 	});
 
+	app.post("/door/open",function(requ,res){
+		socketio.emit("door_messages", {open: true}).
+	})
+
+	app.post("/door/close",function(requ,res){
+		socketio.emit("door_messages", {open: false}).
+	})
+
 
 	/*
 	* Push notifications
 	*/
 
-	function androidPushTest() {
-		var payload = {
-			data: { msg: 'Hello!' }
-		};
+	function androidPushNotification(payload) {
 
 		if (NO_NOTIFICATIONS) {
 			console.log("Dry run of push notification - not sending");
