@@ -6,14 +6,22 @@
 	var app = express();
 	var fs = require("fs");
 	var http = require('http') || require('https');
-	var io = require('socket.io')(http);
 	var socketio;
 	var azure = require('azure');
-	var pictureHandler = require("./picture_handler/index");
 	var notificationHubService = azure.createNotificationHubService(
 		'doormanhub',
 		'Endpoint=sb://doormanhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=qH4Zz0OXMjRltBXONus6eRZrV+auv6FU3Ogs48sCzAA='
 	);
+
+	function guid() {
+	  function s4() {
+	    return Math.floor((1 + Math.random()) * 0x10000)
+	      .toString(16)
+	      .substring(1);
+	  }
+	  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+	    s4() + '-' + s4() + s4() + s4();
+	}
 
 		// config
 	var PORT = process.env.PORT || 5000,
@@ -26,6 +34,8 @@
 		log      : log.bind(null, "Edison:")
 	};
 	
+<<<<<<< HEAD
+=======
 	console.log("Opening Socket...");
 	io.on('connection', function(socket){
 		socketio = socket;
@@ -50,9 +60,8 @@
 			  	console.log("https://doorman.azurewebsite.net/uploads/" + fileName);
 			  }
 			});
+>>>>>>> aba2b15910d09a25174c3b1ae7d6f2eb071c6a8c
 
-	  });
-	});
 
 
 	console.log('\n');
@@ -187,7 +196,38 @@
 		log("ATT body:", req.body);
 		res.send("success");
 	});
+	console.log("Launching Server...");
+	var server = app.listen(PORT);
 
-	app.listen(PORT);
+	var io = require('socket.io').listen(server);
+	console.log("Opening Socket...");
+	io.sockets.on('connection', function(socket){
+		console.log("New Connection...");
+		socketio = socket;
+	  socketio.on('package_picture', function(socket_data){
+	  	var base64Data = socket_data.image.base64String;
+	  	//console.log(base64Data);
+	  	var fileFormat = socket_data.image.contentType.split("/")[1];
+	  	var fileName = guid() + "." + fileFormat;
+	  	var fileFullName = "./uploads/" + fileName;
+	  	var fileURL = "http://localhost:9000/uploads" + fileName
+	  	if(base64Data!= "" && base64Data != null){
+		  	fs.writeFile(fileFullName, base64Data, 'base64', function(err) {
+		  		if(!err){
+		  			console.log(err);
+		  		}
+				  else{
+				  	var payload{
+				  		data:{
+				  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
+				  		}
+				  	}
+				  	androidPushNotification(payload);
+				  	//console.log("The URL is: " + fileURL);
+				  }
+				});
+	  	}
+	  });
+	});
 
 }());
