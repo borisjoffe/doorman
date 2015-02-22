@@ -9,7 +9,7 @@
 	var io = require('socket.io')(http);
 	var socketio;
 	var azure = require('azure');
-	var pictureHandler = require("picture_handler");
+	var pictureHandler = require("./picture_handler/index");
 	var notificationHubService = azure.createNotificationHubService(
 		'doormanhub',
 		'Endpoint=sb://doormanhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=qH4Zz0OXMjRltBXONus6eRZrV+auv6FU3Ogs48sCzAA='
@@ -26,7 +26,7 @@
 		log      : log.bind(null, "Edison:")
 	};
 	
-	console.log("Oppening Socket...");
+	console.log("Opening Socket...");
 	io.on('connection', function(socket){
 		socketio = socket;
 	  socketio.on('disconnect', function(){
