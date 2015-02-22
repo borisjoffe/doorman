@@ -1,26 +1,25 @@
 (function () {
 	'use strict';
 
-	var _ = require('lodash'),
-
-	express = require('express'),
-	app = express(),
-	var fs = require("fs")
-	var http = require('http') || require('https'),
+	var _ = require('lodash');
+	var express = require('express');
+	var app = express();
+	var fs = require("fs");
+	var http = require('http') || require('https');
 	var io = require('socket.io')(http);
 	var socketio;
-	var azure = require('azure'),
-	var pictureHandler = require("picture_handler")
+	var azure = require('azure');
+	var pictureHandler = require("picture_handler");
 	var notificationHubService = azure.createNotificationHubService(
 		'doormanhub',
 		'Endpoint=sb://doormanhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=qH4Zz0OXMjRltBXONus6eRZrV+auv6FU3Ogs48sCzAA='
-	),
+	);
 
 		// config
-	PORT = process.env.PORT || 9000,
-	NO_NOTIFICATIONS = false,
+	var PORT = process.env.PORT || 9000,
+		NO_NOTIFICATIONS = false;
 
-	EDISON = {
+	var EDISON = {
 		ip       : '127.0.0.1',   // stub this out now
 		port     : PORT,
 		endpoint : { takePhoto: '/takePhoto' },
@@ -29,24 +28,24 @@
 	
 	console.log("Oppening Socket...");
 	io.on('connection', function(socket){
-		socketio = socket
+		socketio = socket;
 	  socketio.on('disconnect', function(){
 	    console.log('edison disconnected');
 	  });
 	  socketio.on('package_picture', function(socket_data){
-	  	var base64Data = socket_data.image.base64String
-	  	var fileFormat = socket_data.image.contentType.split("/")[1]
-	  	var fileName = pictureHandler.guid() + "." + fileFormat
+	  	var base64Data = socket_data.image.base64String;
+	  	var fileFormat = socket_data.image.contentType.split("/")[1];
+	  	var fileName = pictureHandler.guid() + "." + fileFormat;
 	  	fs.writeFile(fileName, base64Data, 'base64', function(err) {
 	  		if(!err){
 	  			console.log(err);
 	  		}
 			  else{
-			  	var payload{
+			  	var payload = {
 			  		data:{
 			  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
 			  		}
-			  	}
+			  	};
 			  	androidPushNotification(payload);
 			  }
 			});
@@ -93,10 +92,10 @@
 
 		res.send(html);
 		var payload = {
-			data{
+			data: {
 				msg: "Hellow Push!!!"
 			}
-		}
+		};
 		androidPushNotification(payload);
 	});
 
@@ -120,12 +119,12 @@
 	});
 
 	app.post("/door/open",function(requ,res){
-		socketio.emit("door_messages", {open: true}).
-	})
+		socketio.emit("door_messages", {open: true});
+	});
 
 	app.post("/door/close",function(requ,res){
-		socketio.emit("door_messages", {open: false}).
-	})
+		socketio.emit("door_messages", {open: false});
+	});
 
 
 	/*
