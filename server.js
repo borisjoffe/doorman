@@ -13,6 +13,11 @@
 		res.send('doorman in node');
 	});
 
+	app.get('/pkg/:id', function (req, res) {
+		var pkgId = req.params.id;
+		res.send(pkgId);
+	});
+
 	app.listen(PORT);
 
 }());
