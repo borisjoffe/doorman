@@ -5,7 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "azure-cli": "^0.8.15",
-    "express": "^4.11.2"
+    "express": "^4.11.2",
+    "lodash": "^3.3.0"
   },
   "devDependencies": {},
   "scripts": {
