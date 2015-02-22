@@ -33,36 +33,6 @@
 		endpoint : { takePhoto: '/takePhoto' },
 		log      : log.bind(null, "Edison:")
 	};
-	
-<<<<<<< HEAD
-=======
-	console.log("Opening Socket...");
-	io.on('connection', function(socket){
-		socketio = socket;
-	  socketio.on('disconnect', function(){
-	    console.log('edison disconnected');
-	  });
-	  socketio.on('package_picture', function(socket_data){
-	  	var base64Data = socket_data.image.base64String;
-	  	var fileFormat = socket_data.image.contentType.split("/")[1];
-	  	var fileName = pictureHandler.guid() + "." + fileFormat;
-	  	fs.writeFile(fileName, base64Data, 'base64', function(err) {
-	  		if(!err){
-	  			console.log(err);
-	  		}
-			  else{
-			  	//var payload{
-			  	//	data:{
-			  	//		imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
-			  	//	}
-			  	//}
-			  	//androidPushNotification(payload);
-			  	console.log("https://doorman.azurewebsite.net/uploads/" + fileName);
-			  }
-			});
->>>>>>> aba2b15910d09a25174c3b1ae7d6f2eb071c6a8c
-
-
 
 	console.log('\n');
 
@@ -100,14 +70,14 @@
 		var
 			//html = [msg, DELIVERY_IMG].join("<br><br>");
 			html = msg;
-
-		res.send(html);
 		var payload = {
 			data: {
 				msg: "Hellow Push!!!"
 			}
 		};
 		androidPushNotification(payload);
+
+		res.send(html);
 	});
 
 	// production pkg delivery endpoint
