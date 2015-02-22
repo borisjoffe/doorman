@@ -1,0 +1,24 @@
+{
+  "name": "hh",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "azure-cli": "^0.8.15",
+    "express": "^4.11.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borisjoffe/doorman.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/borisjoffe/doorman/issues"
+  },
+  "homepage": "https://github.com/borisjoffe/doorman"
+}
