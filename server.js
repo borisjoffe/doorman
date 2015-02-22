@@ -165,6 +165,8 @@
 	*/
 
 	app.get('/att-oauth', function (req, res) {
+		log("ATT params:", req.params);
+		log("ATT body:", req.body);
 		res.send("success");
 	});
 
