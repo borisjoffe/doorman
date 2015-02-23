@@ -83,7 +83,7 @@
 		  }
 		})
 
-		res.send(html);
+		res.send("lslsls");
 	});
 
 	// production pkg delivery endpoint
