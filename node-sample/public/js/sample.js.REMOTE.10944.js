@@ -251,6 +251,7 @@ function openDoor(event) {
   clearError();
 
   alert("Door opened.");
+  debugger;
   ajaxRequest({
     method: 'GET',
     url: 'https://127.0.0.1:9000/unlock/123',
@@ -258,7 +259,6 @@ function openDoor(event) {
     data: 'unlock',
     success: function(){}
   });
-
 
 }
 

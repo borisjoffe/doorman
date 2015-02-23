@@ -255,6 +255,10 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
+app.get('/unlock/:door', function (req, res) {
+	console.log("RTC:", "unlock door", req.params.door);
+});
+
 // ---------------------------------------------
 // END: Boiler-plate Express app route set-up
 // ---------------------------------------------
