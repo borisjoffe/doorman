@@ -8,6 +8,8 @@
 	var request = require("request");
 	var http = require('http') || require('https');
 	var socketio;
+	var io = require('socket.io').listen(server);
+	socketio = io;
 	var azure = require('azure');
 	var notificationHubService = azure.createNotificationHubService(
 		'doormanhub',
@@ -176,7 +178,6 @@
 	console.log("Launching Server...");
 	var server = app.listen(PORT);
 
-	var io = require('socket.io').listen(server);
 	console.log("Opening Socket...");
 	io.sockets.on('connection', function(socket){
 		console.log("New Connection...");
