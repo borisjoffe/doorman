@@ -258,6 +258,15 @@ module.exports = app;
 // ---------------------------------------------
 // END: Boiler-plate Express app route set-up
 // ---------------------------------------------
+app.get('/unlock/door', function (req, res) {
+    console.log("RTC:", "unlock door");
+    http.get('http://doorman.azurewebsites.net/unlock/door', function () { 
+        console.log("success", arguments);
+    }, function (err) { 
+        console.error("Err:", arguments);
+    });
+    res.send("success");
+});
 
 //-----------------------------------------------------------
 // END: app.js

@@ -251,13 +251,13 @@ function openDoor(event) {
   clearError();
 
   alert("Door opened.");
-  debugger;
   ajaxRequest({
     method: 'GET',
-    url: 'https://doorman.azurewebsites.net/unlock/123',
+    url: 'https://doorman.azurewebsites.net/door/open',
     data: 'unlock',
     success: function(){}
   });
+
 
 }
 
