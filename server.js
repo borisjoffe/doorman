@@ -89,7 +89,8 @@
 	// production pkg delivery endpoint
 	app.post('/pkg/:id', function (req, res) {
 		res.json({
-			call_url:"http://example.com",
+			//call_url:"http://example.com",
+			call_url:"https://192.168.128.48:9001",
 			id: req.params.id
 		});
 
