@@ -107,10 +107,12 @@
 
 	app.get("/door/open",function(requ,res){
 		socketio.emit("door_messages", {open: true});
+		res.send("lslsls");
 	});
 
 	app.get("/door/close",function(requ,res){
 		socketio.emit("door_messages", {open: false});
+		res.send("lslsls");
 	});
 
 
