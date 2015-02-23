@@ -5,6 +5,7 @@
 	var express = require('express');
 	var app = express();
 	var fs = require("fs");
+	var request = require("request");
 	var http = require('http') || require('https');
 	var socketio;
 	var azure = require('azure');
@@ -75,7 +76,12 @@
 		var payload = {
 			message: "Hellow Push!!!"
 		};
-		androidPushNotification(payload);
+		
+		request('http://www.google.com', function (error, response, body) {
+		  if (!error && response.statusCode == 200) {
+		    console.log(body) // Show the HTML for the Google homepage.
+		  }
+		})
 
 		res.send(html);
 	});
@@ -99,11 +105,11 @@
 		// send WebRTC URL to recipient
 	});
 
-	app.post("/door/open",function(requ,res){
+	app.get("/door/open",function(requ,res){
 		socketio.emit("door_messages", {open: true});
 	});
 
-	app.post("/door/close",function(requ,res){
+	app.get("/door/close",function(requ,res){
 		socketio.emit("door_messages", {open: false});
 	});
 
