@@ -7,7 +7,7 @@
 	var fs = require("fs");
 	//var request = require("request");
 	var http = require('http') || require('https');
-	var socketio;
+	var socketio = require('socket.io');
 	var azure = require('azure');
 	var notificationHubService = azure.createNotificationHubService(
 		'doormanhub',
