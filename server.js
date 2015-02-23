@@ -72,14 +72,12 @@
 		var
 			//html = [msg, DELIVERY_IMG].join("<br><br>");
 			html = msg;
-
-		res.send(html);
 		var payload = {
-			data: {
-				msg: "Hellow Push!!!"
-			}
+			message: "Hellow Push!!!"
 		};
 		androidPushNotification(payload);
+
+		res.send(html);
 	});
 
 	// production pkg delivery endpoint
