@@ -253,8 +253,12 @@ function openDoor(event) {
   alert("Door opened.");
   ajaxRequest({
     method: 'GET',
-    //url: 'https://127.0.0.1:9000/unlock/123',
-    url: 'https://doorman.azurewebsites.net/unlock/123',
+<<<<<<< HEAD
+    url: 'https://doorman.azurewebsites.net/door/open',
+=======
+    url: 'https://127.0.0.1:9000/unlock/123',
+    //url: 'https://doorman.azurewebsites.net/unlock/123',
+>>>>>>> 0a2a78747419dc7e360f7008ff0a66e0f8891998
     data: 'unlock',
     success: function(){}
   });

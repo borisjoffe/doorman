@@ -1,5 +1,5 @@
 /*jslint browser: true, devel: true, node: true, debug: true, todo: true, indent: 2, maxlen: 150*/
-/*global ATT, ajaxRequest, console, log, phone, clearMessage, clearError, switchToLoginView, resetUI,
+/*global ATT, console, log, phone, clearMessage, clearError, switchToLoginView, resetUI,
   validateAddress, associateE911Id, getE911Id, loginVirtualNumberOrAccountIdUser, loginEnhancedWebRTC,
   onError, clearSessionData, phoneLogout, loadView, dialCall, answer, answer2ndCall,
   hold, resume, startConference, joinConference, addParticipants,
@@ -251,14 +251,13 @@ function openDoor(event) {
   clearError();
 
   alert("Door opened.");
+  debugger;
   ajaxRequest({
     method: 'GET',
-    //url: 'https://127.0.0.1:9000/unlock/123',
     url: 'https://doorman.azurewebsites.net/unlock/123',
     data: 'unlock',
     success: function(){}
   });
-
 
 }
 
@@ -359,28 +358,3 @@ function moveCall() {
 function switchCalls() {
   switchCall();
 }
-
-function start() {
-      var newUser = { 
-        "user_id": "user_id",
-        "user_name": "user_name",
-        "password": "password",
-        "user_type": "user_type"
-      };  
-  
-      ajaxRequest({
-          method: 'GET',
-          url: 'https://doorman.azurewebsites.net',
-		  /*
-          headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		  },
-		  */
-          data: newUser,
-          success: console.log.bind(null),
-          error: console.error.bind(null)
-      }); 
-}
-  
-//start();
-
