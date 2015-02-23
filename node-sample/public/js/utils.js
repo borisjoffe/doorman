@@ -334,6 +334,7 @@ function accessTokenSuccess(data) {
 }
 
 function login(userType, authCode, userName) {
+	console.log("LOGIN:", arguments);
   createAccessToken(userType,
     authCode,
     function (data) {

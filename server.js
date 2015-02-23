@@ -184,8 +184,8 @@
 	  	var fileFormat = socket_data.image.contentType.split("/")[1];
 	  	var fileName = guid() + "." + fileFormat;
 	  	var fileFullName = "./uploads/" + fileName;
-	  	var fileURL = "http://localhost:9000/uploads" + fileName
-	  	if(base64Data!= "" && base64Data != null){
+	  	var fileURL = "http://localhost:9000/uploads" + fileName;
+	  	if(base64Data!== "" && base64Data !== null){
 		  	fs.writeFile(fileFullName, base64Data, 'base64', function(err) {
 		  		if(!err){
 		  			console.log(err);
@@ -195,7 +195,7 @@
 				  		data:{
 				  			imageUrl: "https://doorman.azurewebsite.net/uploads/" + "fileName"
 				  		}
-				  	}
+				  	};
 				  	androidPushNotification(payload);
 				  	//console.log("The URL is: " + fileURL);
 				  }
